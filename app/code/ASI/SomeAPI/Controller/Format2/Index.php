@@ -11,19 +11,22 @@ class Index extends \Magento\Framework\App\Action\Action
     protected $_processFactory;
     protected $_configFactory;
     protected $_dataFactory;
+    protected $_packageFormat2Factory;
 
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
-        \Magento\Framework\View\Result\PageFactory $pageFactory,
-        \ASI\SomeAPI\Model\Auth\AuthFactory $authFactory,
-        \ASI\SomeAPI\Model\APIProcess\APIProcessFactory $processFactory,
-        \ASI\SomeAPI\Helper\DataFactory $dataFactory
+        \Magento\Framework\App\Action\Context               $context,
+        \Magento\Framework\View\Result\PageFactory          $pageFactory,
+        \ASI\SomeAPI\Model\Auth\AuthFactory                 $authFactory,
+        \ASI\SomeAPI\Model\APIProcess\APIProcessFactory     $processFactory,
+        \ASI\SomeAPI\Helper\DataFactory                     $dataFactory,
+        \ASI\SomeAPI\Model\Package\PackageFormat2Factory    $packageFormat2Factory
         )
     {
-        $this->_pageFactory     = $pageFactory;
-        $this->_authFactory     = $authFactory;
-        $this->_processFactory  = $processFactory;
-        $this->_dataFactory     = $dataFactory;
+        $this->_pageFactory             = $pageFactory;
+        $this->_authFactory             = $authFactory;
+        $this->_processFactory          = $processFactory;
+        $this->_dataFactory             = $dataFactory;
+        $this->_packageFormat2Factory   = $packageFormat2Factory;
         return parent::__construct($context);
     }
 
@@ -32,7 +35,7 @@ class Index extends \Magento\Framework\App\Action\Action
         try {
             $dataPOST = trim(file_get_contents('php://input'));
 
-            $package = (new PackageFormat2Factory)->create(
+            $package = $this->_packageFormat2Factory->create(
                 (new \Zend_Controller_Request_Http())->getHeader('someapi_bearer_token'),
                 $dataPOST
             );

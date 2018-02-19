@@ -2,7 +2,6 @@
 namespace ASI\SomeAPI\Controller\Format1;
 
 use Magento\TestFramework\Event\Magento;
-use ASI\SomeAPI\Model\Package\PackageFormat1Factory;
 
 class Index extends \Magento\Framework\App\Action\Action
 {
@@ -10,17 +9,20 @@ class Index extends \Magento\Framework\App\Action\Action
     protected $_authFactory;
     protected $_processFactory;
     protected $_configFactory;
+    protected $_packageFormat1Factory;
 
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
-        \Magento\Framework\View\Result\PageFactory $pageFactory,
-        \ASI\SomeAPI\Model\Auth\AuthFactory $authFactory,
-        \ASI\SomeAPI\Model\APIProcess\APIProcessFactory $processFactory
+        \Magento\Framework\App\Action\Context               $context,
+        \Magento\Framework\View\Result\PageFactory          $pageFactory,
+        \ASI\SomeAPI\Model\Auth\AuthFactory                 $authFactory,
+        \ASI\SomeAPI\Model\APIProcess\APIProcessFactory     $processFactory,
+        \ASI\SomeAPI\Model\Package\PackageFormat1Factory    $packageFormat1Factory
         )
     {
-        $this->_pageFactory     = $pageFactory;
-        $this->_authFactory     = $authFactory;
-        $this->_processFactory  = $processFactory;
+        $this->_pageFactory             = $pageFactory;
+        $this->_authFactory             = $authFactory;
+        $this->_processFactory          = $processFactory;
+        $this->_packageFormat1Factory   = $packageFormat1Factory;
         return parent::__construct($context);
     }
 
@@ -28,8 +30,8 @@ class Index extends \Magento\Framework\App\Action\Action
     {
         try {
             $input_params = $this->getRequest()->getParams();
-            $package = (new PackageFormat1Factory)->create(
-                '123',//(new \Zend_Controller_Request_Http())->getHeader('someapi_bearer_token'),
+            $package = $this->_packageFormat1Factory->create(
+                (new \Zend_Controller_Request_Http())->getHeader('someapi_bearer_token'),
                 $input_params
             );
         } catch (\Exception $exception) {
