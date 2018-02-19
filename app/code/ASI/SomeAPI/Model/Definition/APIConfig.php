@@ -20,7 +20,7 @@ class APIConfig {
         return $this->validators_names;
     }
 
-    public function getProperies() {
+    public function getProperties() {
         return $this->properties;
     }
 }

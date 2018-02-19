@@ -3,25 +3,29 @@ namespace ASI\SomeAPI\Controller\Format1;
 
 use Magento\TestFramework\Event\Magento;
 use ASI\SomeAPI\Model\Package\PackageFormat1Factory;
-use ASI\SomeAPI\Model\APIProcess\APIProcessFactory;
-use ASI\SomeAPI\Model\Test\Test;
 
 class Index extends \Magento\Framework\App\Action\Action
 {
 	protected $_pageFactory;
     protected $_authFactory;
+    protected $_processFactory;
+    protected $_configFactory;
 
 	public function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $pageFactory,
-        \ASI\SomeAPI\Model\Auth\AuthFactory $authFactory
+        \ASI\SomeAPI\Model\Auth\AuthFactory $authFactory,
+        \ASI\SomeAPI\Model\APIProcess\APIProcessFactory $processFactory,
+        \ASI\SomeAPI\Model\Definition\APIConfigFactory $configFactory
+
         /*\Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \ASI\SomeAPI\Model\BearerTokensFactory $bearerTokensFactory*/
         )
 	{
-        $this->_pageFactory = $pageFactory;
-        $this->_authFactory = $authFactory;
-
+        $this->_pageFactory     = $pageFactory;
+        $this->_authFactory     = $authFactory;
+        $this->_processFactory  = $processFactory;
+        $this->_configFactory   = $configFactory;
         return parent::__construct($context);
 	}
 
@@ -39,7 +43,9 @@ class Index extends \Magento\Framework\App\Action\Action
         }
 
         $auth = $this->_authFactory->create(
-            ['bearer_token' => $package->get('bearer_token')]
+            array (
+                'bearer_token' => $package->get('bearer_token')
+            )
         );
         if(!$auth->isUserAuthorized()) {
             //error
@@ -47,22 +53,22 @@ class Index extends \Magento\Framework\App\Action\Action
             return;
         }
 
-        //$value = $this->_scopeConfig->getValue('API', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-        //var_dump($value);
 
-        /*try {
-            $apiProcess = (new APIProcessFactory())
-                ->create(
-                    $this->_scopeConfig,
-                    $package->get('version'),
-                    $package->get('command'),
-                    $package->get('params')
-                );
+
+
+        try {
+            $apiProcess = $this->_processFactory->create(
+                array(
+                    'version' => $package->get('version'),
+                    'command' => $package->get('command'),
+                    'params'  => $package->get('params')
+                )
+            );
 
             echo json_encode($apiProcess->startProcessing());
         } catch (\Exception $exception) {
             echo json_encode(array("error" => $exception->getMessage()));
             return;
-        }*/
+        }
 	}
 }
