@@ -1,6 +1,6 @@
 <?php
 namespace ASI\SomeAPI\Model;
-class Post extends \Magento\Framework\Model\AbstractModel implements \Magento\Framework\DataObject\IdentityInterface
+class BearerTokens extends \Magento\Framework\Model\AbstractModel implements \Magento\Framework\DataObject\IdentityInterface
 {
 	const CACHE_TAG = 'mageplaza_helloworld_post';
 
@@ -10,7 +10,7 @@ class Post extends \Magento\Framework\Model\AbstractModel implements \Magento\Fr
 
 	protected function _construct()
 	{
-		$this->_init('ASI\SomeAPI\Model\ResourceModel\Post');
+		$this->_init('ASI\SomeAPI\Model\ResourceModel\BearerTokens');
 	}
 
 	public function getIdentities()

@@ -6,22 +6,22 @@ use Magento\TestFramework\Event\Magento;
 class Index extends \Magento\Framework\App\Action\Action
 {
 	protected $_pageFactory;
-    protected $_postFactory;
+    protected $_bearerTokensFactory;
 
 	public function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $pageFactory,
-        \ASI\SomeAPI\Model\PostFactory $postFactory
+        \ASI\SomeAPI\Model\BearerTokensFactory $bearerTokensFactory
         )
 	{
         $this->_pageFactory = $pageFactory;
-        $this->_postFactory = $postFactory;
+        $this->_bearerTokensFactory = $bearerTokensFactory;
         return parent::__construct($context);
 	}
 
 	public function execute()
 	{
-        $post = $this->_postFactory->create();
+        $post = $this->_bearerTokensFactory->create();
         $collection = $post->getCollection();
         foreach($collection as $item){
             echo "<pre>";

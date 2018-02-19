@@ -1,7 +1,7 @@
 <?php
 namespace ASI\SomeAPI\Model\ResourceModel;
 
-class Post extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
+class BearerTokens extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {
 	
 	public function __construct(

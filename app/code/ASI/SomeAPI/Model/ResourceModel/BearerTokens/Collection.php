@@ -1,5 +1,5 @@
 <?php
-namespace ASI\SomeAPI\Model\ResourceModel\Post;
+namespace ASI\SomeAPI\Model\ResourceModel\BearerTokens;
 
 class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
 {
@@ -14,7 +14,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
 	 */
 	protected function _construct()
 	{
-		$this->_init('ASI\SomeAPI\Model\Post', 'ASI\SomeAPI\Model\ResourceModel\Post');
+		$this->_init('ASI\SomeAPI\Model\BearerTokens', 'ASI\SomeAPI\Model\ResourceModel\BearerTokens');
 	}
 
 }
