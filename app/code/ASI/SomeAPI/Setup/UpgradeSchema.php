@@ -11,7 +11,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
         $installer = $setup;
         $installer->startSetup();
 
-        $table_name = 'mageplaza_helloworld_post';
+        $table_name = 'bearer_tokens';//TODO name tabel in config
 
         if(version_compare($context->getVersion(), '1.1.0', '<')) {
             if (!$installer->tableExists($table_name)) {
@@ -19,7 +19,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     $installer->getTable($table_name)
                 )
                     ->addColumn(
-                        'post_id',
+                        'bearer_token_id',
                         \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
                         null,
                         [
@@ -27,74 +27,24 @@ class UpgradeSchema implements UpgradeSchemaInterface
                             'nullable' => false,
                             'primary'  => true,
                             'unsigned' => true,
-                        ],
-                        'Post ID'
+                        ]
                     )
                     ->addColumn(
-                        'name',
+                        'value',
                         \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
                         255,
-                        ['nullable => false'],
-                        'Post Name'
-                    )
-                    ->addColumn(
-                        'url_key',
-                        \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-                        255,
-                        [],
-                        'Post URL Key'
-                    )
-                    ->addColumn(
-                        'post_content',
-                        \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-                        '64k',
-                        [],
-                        'Post Post Content'
-                    )
-                    ->addColumn(
-                        'tags',
-                        \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-                        255,
-                        [],
-                        'Post Tags'
-                    )
-                    ->addColumn(
-                        'status',
-                        \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
-                        1,
-                        [],
-                        'Post Status'
-                    )
-                    ->addColumn(
-                        'featured_image',
-                        \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-                        255,
-                        [],
-                        'Post Featured Image'
-                    )
-                    ->addColumn(
-                        'created_at',
-                        \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
-                        null,
-                        ['nullable' => false, 'default' => \Magento\Framework\DB\Ddl\Table::TIMESTAMP_INIT],
-                        'Created At'
-                    )->addColumn(
-                        'updated_at',
-                        \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
-                        null,
-                        ['nullable' => false, 'default' => \Magento\Framework\DB\Ddl\Table::TIMESTAMP_INIT_UPDATE],
-                        'Updated At')
-                    ->setComment('Post Table');
+                        ['nullable => false']
+                    );
                 $installer->getConnection()->createTable($table);
 
                 $installer->getConnection()->addIndex(
                     $installer->getTable($table_name),
                     $setup->getIdxName(
                         $installer->getTable($table_name),
-                        ['name','url_key','post_content','tags','featured_image'],
+                        ['value'],
                         \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_FULLTEXT
                     ),
-                    ['name','url_key','post_content','tags','featured_image'],
+                    ['value'],
                     \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_FULLTEXT
                 );
             }

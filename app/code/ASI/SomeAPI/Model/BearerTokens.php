@@ -2,11 +2,11 @@
 namespace ASI\SomeAPI\Model;
 class BearerTokens extends \Magento\Framework\Model\AbstractModel implements \Magento\Framework\DataObject\IdentityInterface
 {
-	const CACHE_TAG = 'mageplaza_helloworld_post';
+	const CACHE_TAG = 'bearer_tokens';
 
-	protected $_cacheTag = 'mageplaza_helloworld_post';
+	protected $_cacheTag = 'bearer_tokens';
 
-	protected $_eventPrefix = 'mageplaza_helloworld_post';
+	protected $_eventPrefix = 'bearer_tokens';
 
 	protected function _construct()
 	{

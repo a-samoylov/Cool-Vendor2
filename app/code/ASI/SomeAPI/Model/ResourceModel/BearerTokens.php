@@ -13,7 +13,7 @@ class BearerTokens extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 	
 	protected function _construct()
 	{
-		$this->_init('mageplaza_helloworld_post', 'post_id');
+		$this->_init('bearer_tokens', 'bearer_token_id');
 	}
 	
 }
