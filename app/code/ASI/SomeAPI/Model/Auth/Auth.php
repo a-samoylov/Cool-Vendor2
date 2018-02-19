@@ -2,7 +2,7 @@
 namespace ASI\SomeAPI\Model\Auth;
 
 class Auth {
-    private $bearer_token;
+    //private $bearer_token;
     private $bearer_tokens_factory;
 
     public function __construct(

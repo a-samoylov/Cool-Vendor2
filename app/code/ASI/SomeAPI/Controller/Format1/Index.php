@@ -3,26 +3,25 @@ namespace ASI\SomeAPI\Controller\Format1;
 
 use Magento\TestFramework\Event\Magento;
 use ASI\SomeAPI\Model\Package\PackageFormat1Factory;
-use ASI\SomeAPI\Model\Auth\AuthFactory;
 use ASI\SomeAPI\Model\APIProcess\APIProcessFactory;
-use ASI\SomeAPI\Model\Definition\APIConfigFactory;
+use ASI\SomeAPI\Model\Test\Test;
 
 class Index extends \Magento\Framework\App\Action\Action
 {
 	protected $_pageFactory;
-    protected $_bearerTokensFactory;
-    protected $_scopeConfig;
+    protected $_authFactory;
 
 	public function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $pageFactory,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \ASI\SomeAPI\Model\BearerTokensFactory $bearerTokensFactory
+        \ASI\SomeAPI\Model\Auth\AuthFactory $authFactory
+        /*\Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+        \ASI\SomeAPI\Model\BearerTokensFactory $bearerTokensFactory*/
         )
 	{
         $this->_pageFactory = $pageFactory;
-        $this->_bearerTokensFactory = $bearerTokensFactory;
-        $this->_scopeConfig = $scopeConfig;
+        $this->_authFactory = $authFactory;
+
         return parent::__construct($context);
 	}
 
@@ -39,9 +38,8 @@ class Index extends \Magento\Framework\App\Action\Action
             return;
         }
 
-        $auth = (new AuthFactory())->create(
-            $package->get('bearer_token'),
-            $this->_bearerTokensFactory
+        $auth = $this->_authFactory->create(
+            ['bearer_token' => $package->get('bearer_token')]
         );
         if(!$auth->isUserAuthorized()) {
             //error
@@ -52,7 +50,7 @@ class Index extends \Magento\Framework\App\Action\Action
         //$value = $this->_scopeConfig->getValue('API', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
         //var_dump($value);
 
-        try {
+        /*try {
             $apiProcess = (new APIProcessFactory())
                 ->create(
                     $this->_scopeConfig,
@@ -65,6 +63,6 @@ class Index extends \Magento\Framework\App\Action\Action
         } catch (\Exception $exception) {
             echo json_encode(array("error" => $exception->getMessage()));
             return;
-        }
+        }*/
 	}
 }
