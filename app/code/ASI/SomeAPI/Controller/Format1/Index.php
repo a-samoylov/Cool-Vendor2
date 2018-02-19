@@ -2,9 +2,11 @@
 namespace ASI\SomeAPI\Controller\Format1;
 
 require_once(__DIR__ . "/../../Model/Package/PackageFormat1Factory.php");
+require_once(__DIR__ . "/../../Model/Auth/AuthFactory.php");
 
 use Magento\TestFramework\Event\Magento;
 use ASI\SomeAPI\Model\Package\PackageFormat1Factory;
+use ASI\SomeAPI\Model\Auth\AuthFactory;
 
 class Index extends \Magento\Framework\App\Action\Action
 {
@@ -34,14 +36,20 @@ class Index extends \Magento\Framework\App\Action\Action
             echo json_encode(array("error" => $exception->getMessage()));
             return;
         }
+
+        $auth = (new AuthFactory())->create(
+            $package->get('bearer_token'),
+            $this->_bearerTokensFactory
+        );
+        if(!$auth->isUserAuthorized()) {
+            //error
+            echo json_encode(array("error" => "Invalid bearer token"));
+            return;
+        }
+
+
         
 
-        /*$post = $this->_bearerTokensFactory->create();
-        $collection = $post->getCollection();
-        foreach($collection as $item){
-            echo "<pre>";
-            print_r($item->getData());
-            echo "</pre>";
-        }*/
+
 	}
 }
