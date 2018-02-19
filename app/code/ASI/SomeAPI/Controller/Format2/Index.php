@@ -31,7 +31,6 @@ class Index extends \Magento\Framework\App\Action\Action
 	{
         try {
             $dataPOST = trim(file_get_contents('php://input'));
-           // echo $this->getRequest()->getHeader('');
 
             $package = (new PackageFormat2Factory)->create(
                 (new \Zend_Controller_Request_Http())->getHeader('someapi_bearer_token'),
@@ -42,11 +41,9 @@ class Index extends \Magento\Framework\App\Action\Action
             return;
         }
 
-        $auth = $this->_authFactory->create(
-            array (
-                'bearer_token' => $package->get('bearer_token')
-            )
-        );
+        $auth = $this->_authFactory->create([
+            'bearer_token' => $package->get('bearer_token')
+        ]);
         if(!$auth->isUserAuthorized()) {
             //error
             echo $this->_dataFactory->create()->arrayToXml(array("error" => "Invalid bearer token"));
@@ -54,13 +51,11 @@ class Index extends \Magento\Framework\App\Action\Action
         }
 
         try {
-            $apiProcess = $this->_processFactory->create(
-                array(
-                    'version' => $package->get('version'),
-                    'command' => $package->get('command'),
-                    'params'  => $package->get('params')
-                )
-            );
+            $apiProcess = $this->_processFactory->create([
+                'version' => $package->get('version'),
+                'command' => $package->get('command'),
+                'params'  => $package->get('params')
+            ]);
             echo $this->_dataFactory->create()->arrayToXml($apiProcess->startProcessing());
         } catch (\Exception $exception) {
             echo $this->_dataFactory->create()->arrayToXml(array("error" => $exception->getMessage()));

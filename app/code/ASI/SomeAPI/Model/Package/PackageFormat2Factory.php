@@ -14,11 +14,11 @@ class PackageFormat2Factory {
             throw new \Exception('Invalid bearer token');
         }
 
-        if($paramsPackage->version == '') {
+        if(isset($paramsPackage->version) || $paramsPackage->version == '') {
             throw new \Exception('Invalid version');
         }
 
-        if($paramsPackage->command == '') {
+        if(isset($paramsPackage->version) || $paramsPackage->command == '') {
             throw new \Exception('Invalid command');
         }
 
