@@ -17,6 +17,6 @@ var pack = {
 		limit: '2'
     	}
 };
-xhr.open('POST', 'http://127.0.0.1/magento/someapi/format2', true);
+xhr.open('POST', 'http://127.0.0.1/magento2/someapi/format2', true);
 xhr.setRequestHeader('someapi_bearer_token', '123');
 xhr.send(JSON.stringify(pack));

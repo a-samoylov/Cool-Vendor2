@@ -1,8 +1,8 @@
 <?php
-namespace ASI\SomeAPI\Controller\Format1;
+namespace ASI\SomeAPI\Controller\Format2;
 
 use Magento\TestFramework\Event\Magento;
-use ASI\SomeAPI\Model\Package\PackageFormat1Factory;
+use ASI\SomeAPI\Model\Package\PackageFormat2Factory;
 
 class Index extends \Magento\Framework\App\Action\Action
 {
@@ -10,30 +10,35 @@ class Index extends \Magento\Framework\App\Action\Action
     protected $_authFactory;
     protected $_processFactory;
     protected $_configFactory;
+    protected $_dataFactory;
 
 	public function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $pageFactory,
         \ASI\SomeAPI\Model\Auth\AuthFactory $authFactory,
-        \ASI\SomeAPI\Model\APIProcess\APIProcessFactory $processFactory
+        \ASI\SomeAPI\Model\APIProcess\APIProcessFactory $processFactory,
+        \ASI\SomeAPI\Helper\DataFactory $dataFactory
         )
 	{
         $this->_pageFactory     = $pageFactory;
         $this->_authFactory     = $authFactory;
         $this->_processFactory  = $processFactory;
+        $this->_dataFactory     = $dataFactory;
         return parent::__construct($context);
 	}
 
 	public function execute()
 	{
         try {
-            $input_params = $this->getRequest()->getParams();
-            $package = (new PackageFormat1Factory)->create(
+            $dataPOST = trim(file_get_contents('php://input'));
+           // echo $this->getRequest()->getHeader('');
+
+            $package = (new PackageFormat2Factory)->create(
                 (new \Zend_Controller_Request_Http())->getHeader('someapi_bearer_token'),
-                $input_params
+                $dataPOST
             );
         } catch (\Exception $exception) {
-            echo json_encode(array("error" => $exception->getMessage()));
+            echo $this->_dataFactory->create()->arrayToXml(array("error" => $exception->getMessage()));
             return;
         }
 
@@ -44,7 +49,7 @@ class Index extends \Magento\Framework\App\Action\Action
         );
         if(!$auth->isUserAuthorized()) {
             //error
-            echo json_encode(array("error" => "Invalid bearer token"));
+            echo $this->_dataFactory->create()->arrayToXml(array("error" => "Invalid bearer token"));
             return;
         }
 
@@ -56,10 +61,9 @@ class Index extends \Magento\Framework\App\Action\Action
                     'params'  => $package->get('params')
                 )
             );
-
-            echo json_encode($apiProcess->startProcessing());
+            echo $this->_dataFactory->create()->arrayToXml($apiProcess->startProcessing());
         } catch (\Exception $exception) {
-            echo json_encode(array("error" => $exception->getMessage()));
+            echo $this->_dataFactory->create()->arrayToXml(array("error" => $exception->getMessage()));
             return;
         }
 	}

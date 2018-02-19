@@ -1,7 +1,6 @@
 <?php
 namespace ASI\SomeAPI\Model\APIProcess;
 
-use ASI\SomeAPI\Model\APIProcess\Handlers\HandlerFactory;
 use ASI\SomeAPI\Model\APIProcess\Validators\ValidatorFactory;
 
 class APIProcess {

@@ -14,7 +14,7 @@ class GetProductsHandler implements HandlerInterface {
     public function run($params) {
         $collection = $this->collectionFactory->create()
             ->addAttributeToSelect('*')
-            ->addAttributeToSort('entity_id', $params->limit)
+            ->addAttributeToSort('entity_id', $params->sort )
             ->setPageSize($params->limit);
 
         return $collection->getData();
