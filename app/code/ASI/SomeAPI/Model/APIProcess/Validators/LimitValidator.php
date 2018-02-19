@@ -1,8 +1,6 @@
 <?php
 namespace ASI\SomeAPI\Model\APIProcess\Validators;
 
-require_once 'ValidatorInterface.php';
-
 class LimitValidator implements ValidatorInterface {
 
     const LIMIT_MIN = 1;

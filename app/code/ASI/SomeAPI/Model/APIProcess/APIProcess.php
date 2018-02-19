@@ -1,9 +1,6 @@
 <?php
 namespace ASI\SomeAPI\Model\APIProcess;
 
-//require_once 'Handlers/HandlerFactory.php';
-//require_once 'Validators/ValidatorFactory.php';
-
 use ASI\SomeAPI\Model\APIProcess\Handlers\HandlerFactory;
 use ASI\SomeAPI\Model\APIProcess\Validators\ValidatorFactory;
 
@@ -28,7 +25,6 @@ class APIProcess {
             }
         }
 
-        exit;
         //create handler
         $handler = (new HandlerFactory())->create($this->handler_name);
         return $handler->run($this->params);

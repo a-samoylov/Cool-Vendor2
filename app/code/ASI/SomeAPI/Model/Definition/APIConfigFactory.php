@@ -39,6 +39,14 @@ class APIConfigFactory {
             throw new \Exception('Command not found');
         }
 
+        if($properties_names == null){
+            $properties_names = [];
+        }
+
+        if($validators_names == null){
+            $validators_names = [];
+        }
+
         return new APIConfig(
             $handler_name,
             $validators_names,

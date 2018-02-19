@@ -13,7 +13,6 @@
                         </validators>
                         <properties>
 
-                            <limit>1</limit>
                         </properties>
                     </command1>
 
