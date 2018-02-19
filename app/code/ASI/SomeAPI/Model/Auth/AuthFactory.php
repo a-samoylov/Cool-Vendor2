@@ -1,10 +1,6 @@
 <?php
 namespace ASI\SomeAPI\Model\Auth;
 
-require_once 'Auth.php';
-
-use ASI\SomeAPI\Model\Auth\Auth;
-
 class AuthFactory {
     private $bearer_token;
 

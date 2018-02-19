@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <API>
+            <api_v1>
+                <version>1.0</version>
+                <list_commands>
+                    <command1>
+                        <name>GetLastProducts</name>
+                        <handler>GetProductsHandler</handler>
+                        <validators>
+                            <validator>LimitValidator</validator>
+                        </validators>
+                        <properties>
+
+                            <limit>1</limit>
+                        </properties>
+                    </command1>
+
+                    <command2>
+                        <name>GetProducts22</name>
+                        <handler>GetProductHandler</handler>
+                        <validators>
+                            <validator>LimitValidator</validator>
+                        </validators>
+                        <properties>
+                        </properties>
+                    </command2>
+                </list_commands>
+            </api_v1>
+
+            <api_v2>
+                <version>2.0</version>
+                <list_commands>
+                    <command2>
+                        <name>GetLastProducts</name>
+                        <handler>GetProductsHandler</handler>
+                        <validators>
+                            <validator1>LimitValidator</validator1>
+                        </validators>
+                        <properties>
+                            <sort>DESC</sort>
+                            <!--<limit>1</limit>  Для теста-->
+                        </properties>
+                    </command2>
+                </list_commands>
+            </api_v2>
+        </API>
+        <email>someemail@gmail.com</email>
+    </default>
+</config>

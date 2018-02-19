@@ -1,8 +1,6 @@
 <?php
 namespace ASI\SomeAPI\Model\Package;
 
-require_once 'Package.php';
-
 class PackageFormat1Factory {
 
     public function __construct() {

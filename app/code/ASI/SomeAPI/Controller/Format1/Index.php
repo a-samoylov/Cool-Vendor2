@@ -1,26 +1,28 @@
 <?php
 namespace ASI\SomeAPI\Controller\Format1;
 
-require_once(__DIR__ . "/../../Model/Package/PackageFormat1Factory.php");
-require_once(__DIR__ . "/../../Model/Auth/AuthFactory.php");
-
 use Magento\TestFramework\Event\Magento;
 use ASI\SomeAPI\Model\Package\PackageFormat1Factory;
 use ASI\SomeAPI\Model\Auth\AuthFactory;
+use ASI\SomeAPI\Model\APIProcess\APIProcessFactory;
+use ASI\SomeAPI\Model\Definition\APIConfigFactory;
 
 class Index extends \Magento\Framework\App\Action\Action
 {
 	protected $_pageFactory;
     protected $_bearerTokensFactory;
+    protected $_scopeConfig;
 
 	public function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $pageFactory,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \ASI\SomeAPI\Model\BearerTokensFactory $bearerTokensFactory
         )
 	{
         $this->_pageFactory = $pageFactory;
         $this->_bearerTokensFactory = $bearerTokensFactory;
+        $this->_scopeConfig = $scopeConfig;
         return parent::__construct($context);
 	}
 
@@ -47,9 +49,22 @@ class Index extends \Magento\Framework\App\Action\Action
             return;
         }
 
+        //$value = $this->_scopeConfig->getValue('API', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        //var_dump($value);
 
-        
+        try {
+            $apiProcess = (new APIProcessFactory())
+                ->create(
+                    $this->_scopeConfig,
+                    $package->get('version'),
+                    $package->get('command'),
+                    $package->get('params')
+                );
 
-
+            echo json_encode($apiProcess->startProcessing());
+        } catch (\Exception $exception) {
+            echo json_encode(array("error" => $exception->getMessage()));
+            return;
+        }
 	}
 }
