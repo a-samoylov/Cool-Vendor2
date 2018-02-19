@@ -6,29 +6,29 @@ use ASI\SomeAPI\Model\Package\PackageFormat2Factory;
 
 class Index extends \Magento\Framework\App\Action\Action
 {
-	protected $_pageFactory;
+    protected $_pageFactory;
     protected $_authFactory;
     protected $_processFactory;
     protected $_configFactory;
     protected $_dataFactory;
 
-	public function __construct(
+    public function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $pageFactory,
         \ASI\SomeAPI\Model\Auth\AuthFactory $authFactory,
         \ASI\SomeAPI\Model\APIProcess\APIProcessFactory $processFactory,
         \ASI\SomeAPI\Helper\DataFactory $dataFactory
         )
-	{
+    {
         $this->_pageFactory     = $pageFactory;
         $this->_authFactory     = $authFactory;
         $this->_processFactory  = $processFactory;
         $this->_dataFactory     = $dataFactory;
         return parent::__construct($context);
-	}
+    }
 
-	public function execute()
-	{
+    public function execute()
+    {
         try {
             $dataPOST = trim(file_get_contents('php://input'));
 
@@ -61,5 +61,5 @@ class Index extends \Magento\Framework\App\Action\Action
             echo $this->_dataFactory->create()->arrayToXml(array("error" => $exception->getMessage()));
             return;
         }
-	}
+    }
 }

@@ -11,11 +11,11 @@ xhr.send();
 Format2
 var xhr = new XMLHttpRequest();
 var pack = {
-	command: 'GetProducts',
-	version: '2.0',
-    	params: {
-		limit: '2'
-    	}
+    command: 'GetProducts',
+    version: '2.0',
+        params: {
+        limit: '2'
+        }
 };
 xhr.open('POST', 'http://127.0.0.1/magento2/someapi/format2', true);
 xhr.setRequestHeader('someapi_bearer_token', '123');
