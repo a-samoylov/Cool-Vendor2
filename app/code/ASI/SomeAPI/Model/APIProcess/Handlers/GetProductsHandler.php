@@ -2,19 +2,21 @@
 namespace ASI\SomeAPI\Model\APIProcess\Handlers;
 
 class GetProductsHandler implements HandlerInterface {
+    private $collectionFactory;
 
-    public function __construct() {
-
+    public function __construct(
+        \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $collectionFactory
+        )
+    {
+        $this->collectionFactory = $collectionFactory;
     }
 
     public function run($params) {
+        $collection = $this->collectionFactory->create()
+            ->addAttributeToSelect('*')
+            ->addAttributeToSort('entity_id', $params->limit)
+            ->setPageSize($params->limit);
 
-
-        /*$products = \Mage::getModel('catalog/product')->getCollection()
-            ->setPage(0, $params->limit)
-            ->setOrder('entity_id', $params->sort);
-
-        return $products->getData();*/
-        return [];
+        return $collection->getData();
     }
 }

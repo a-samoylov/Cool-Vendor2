@@ -12,7 +12,7 @@
                             <validator>LimitValidator</validator>
                         </validators>
                         <properties>
-
+                            <sort>desc</sort>
                         </properties>
                     </command1>
 

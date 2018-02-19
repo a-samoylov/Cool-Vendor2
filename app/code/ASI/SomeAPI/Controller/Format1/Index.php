@@ -17,9 +17,6 @@ class Index extends \Magento\Framework\App\Action\Action
         \ASI\SomeAPI\Model\Auth\AuthFactory $authFactory,
         \ASI\SomeAPI\Model\APIProcess\APIProcessFactory $processFactory,
         \ASI\SomeAPI\Model\Definition\APIConfigFactory $configFactory
-
-        /*\Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \ASI\SomeAPI\Model\BearerTokensFactory $bearerTokensFactory*/
         )
 	{
         $this->_pageFactory     = $pageFactory;
@@ -52,9 +49,6 @@ class Index extends \Magento\Framework\App\Action\Action
             echo json_encode(array("error" => "Invalid bearer token"));
             return;
         }
-
-
-
 
         try {
             $apiProcess = $this->_processFactory->create(

@@ -2,7 +2,23 @@
 namespace ASI\SomeAPI\Model\APIProcess\Handlers;
 
 class HandlerFactory {
-    private $namespace_handler = 'ASI\SomeAPI\Model\APIProcess\Handlers\\';
+    protected $_namespaceHandler = 'ASI\SomeAPI\Model\APIProcess\Handlers\\';
+    protected $_objectManager = null;
+    protected $_instanceName = null;
+
+    public function __construct(
+        \Magento\Framework\ObjectManagerInterface $objectManager
+        )
+    {
+        $this->_objectManager = $objectManager;
+    }
+
+    public function create(array $data = array())
+    {
+        $this->_instanceName = $this->_namespaceHandler . $data['handlerName'];
+        return $this->_objectManager->create($this->_instanceName, []);
+    }
+    /*private $namespace_handler = 'ASI\SomeAPI\Model\APIProcess\Handlers\\';
 
     public function __construct() {
 
@@ -17,5 +33,5 @@ class HandlerFactory {
         }
 
         return $handler;
-    }
+    }*/
 }
