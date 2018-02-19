@@ -18,7 +18,7 @@ class PackageFormat2Factory {
             throw new \Exception('Invalid version');
         }
 
-        if(isset($paramsPackage->version) || $paramsPackage->command == '') {
+        if(isset($paramsPackage->command) || $paramsPackage->command == '') {
             throw new \Exception('Invalid command');
         }
 
