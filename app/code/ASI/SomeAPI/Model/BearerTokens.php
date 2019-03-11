@@ -1,6 +1,9 @@
 <?php
+
 namespace ASI\SomeAPI\Model;
-class BearerTokens extends \Magento\Framework\Model\AbstractModel implements \Magento\Framework\DataObject\IdentityInterface
+
+class BearerTokens extends \Magento\Framework\Model\AbstractModel implements
+    \Magento\Framework\DataObject\IdentityInterface
 {
     const CACHE_TAG = 'bearer_tokens';
 

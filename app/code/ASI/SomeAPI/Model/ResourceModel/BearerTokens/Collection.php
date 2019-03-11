@@ -1,4 +1,5 @@
 <?php
+
 namespace ASI\SomeAPI\Model\ResourceModel\BearerTokens;
 
 class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection

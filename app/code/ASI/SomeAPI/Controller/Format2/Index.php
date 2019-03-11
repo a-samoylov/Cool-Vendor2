@@ -1,4 +1,5 @@
 <?php
+
 namespace ASI\SomeAPI\Controller\Format2;
 
 use Magento\TestFramework\Event\Magento;
@@ -14,19 +15,19 @@ class Index extends \Magento\Framework\App\Action\Action
     protected $_packageFormat2Factory;
 
     public function __construct(
-        \Magento\Framework\App\Action\Context               $context,
-        \Magento\Framework\View\Result\PageFactory          $pageFactory,
-        \ASI\SomeAPI\Model\Auth\AuthFactory                 $authFactory,
-        \ASI\SomeAPI\Model\APIProcess\APIProcessFactory     $processFactory,
-        \ASI\SomeAPI\Helper\DataFactory                     $dataFactory,
-        \ASI\SomeAPI\Model\Package\PackageFormat2Factory    $packageFormat2Factory
-        )
-    {
-        $this->_pageFactory             = $pageFactory;
-        $this->_authFactory             = $authFactory;
-        $this->_processFactory          = $processFactory;
-        $this->_dataFactory             = $dataFactory;
-        $this->_packageFormat2Factory   = $packageFormat2Factory;
+        \Magento\Framework\App\Action\Context $context,
+        \Magento\Framework\View\Result\PageFactory $pageFactory,
+        \ASI\SomeAPI\Model\Auth\AuthFactory $authFactory,
+        \ASI\SomeAPI\Model\APIProcess\APIProcessFactory $processFactory,
+        \ASI\SomeAPI\Helper\DataFactory $dataFactory,
+        \ASI\SomeAPI\Model\Package\PackageFormat2Factory $packageFormat2Factory
+    ) {
+        $this->_pageFactory           = $pageFactory;
+        $this->_authFactory           = $authFactory;
+        $this->_processFactory        = $processFactory;
+        $this->_dataFactory           = $dataFactory;
+        $this->_packageFormat2Factory = $packageFormat2Factory;
+
         return parent::__construct($context);
     }
 
@@ -40,16 +41,18 @@ class Index extends \Magento\Framework\App\Action\Action
                 $dataPOST
             );
         } catch (\Exception $exception) {
-            echo $this->_dataFactory->create()->arrayToXml(array("error" => $exception->getMessage()));
+            echo $this->_dataFactory->create()->arrayToXml(["error" => $exception->getMessage()]);
+
             return;
         }
 
         $auth = $this->_authFactory->create([
             'bearer_token' => $package->get('bearer_token')
         ]);
-        if(!$auth->isUserAuthorized()) {
+        if (!$auth->isUserAuthorized()) {
             //error
-            echo $this->_dataFactory->create()->arrayToXml(array("error" => "Invalid bearer token"));
+            echo $this->_dataFactory->create()->arrayToXml(["error" => "Invalid bearer token"]);
+
             return;
         }
 
@@ -61,7 +64,8 @@ class Index extends \Magento\Framework\App\Action\Action
             ]);
             echo $this->_dataFactory->create()->arrayToXml($apiProcess->startProcessing());
         } catch (\Exception $exception) {
-            echo $this->_dataFactory->create()->arrayToXml(array("error" => $exception->getMessage()));
+            echo $this->_dataFactory->create()->arrayToXml(["error" => $exception->getMessage()]);
+
             return;
         }
     }

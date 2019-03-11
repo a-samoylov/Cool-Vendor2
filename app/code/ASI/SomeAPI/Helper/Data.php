@@ -1,13 +1,15 @@
 <?php
+
 namespace ASI\SomeAPI\Helper;
+
 class Data
 {
     protected function _construct()
     {
-
     }
 
-    public function arrayToXml($array, $rootElement = null, $xml = null) {
+    public function arrayToXml($array, $rootElement = null, $xml = null)
+    {
         $_xml = $xml;
 
         if ($_xml === null) {

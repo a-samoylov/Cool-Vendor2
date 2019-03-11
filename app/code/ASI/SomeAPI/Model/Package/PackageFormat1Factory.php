@@ -1,26 +1,29 @@
 <?php
+
 namespace ASI\SomeAPI\Model\Package;
 
-class PackageFormat1Factory {
+class PackageFormat1Factory
+{
 
-    public function __construct() {
-
+    public function __construct()
+    {
     }
 
-    public function create($bearer_token, $paramsPackage) {
-        if(!$bearer_token) {
+    public function create($bearer_token, $paramsPackage)
+    {
+        if (!$bearer_token) {
             throw new \Exception('Invalid bearer token');
         }
 
-        if(!array_key_exists ('version', $paramsPackage) || $paramsPackage['version'] == '') {
+        if (!array_key_exists('version', $paramsPackage) || $paramsPackage['version'] == '') {
             throw new \Exception('Invalid version');
         }
 
-        if(!array_key_exists ('command', $paramsPackage) || $paramsPackage['command'] == '') {
+        if (!array_key_exists('command', $paramsPackage) || $paramsPackage['command'] == '') {
             throw new \Exception('Invalid command');
         }
 
-        if(!array_key_exists ('params', $paramsPackage)) {
+        if (!array_key_exists('params', $paramsPackage)) {
             $params = new \stdClass();
         } else {
             $params = json_decode($paramsPackage['params']);
@@ -33,5 +36,5 @@ class PackageFormat1Factory {
             $params
         );
     }
-    
+
 }
